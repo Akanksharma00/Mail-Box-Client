@@ -1,0 +1,13 @@
+.label{
+    position: relative;
+    margin:10px;
+}
+
+.input{
+    position: relative;
+    margin: 10px;
+    width: max-content;
+    border: 1px solid #ccc;
+    height: auto;
+    border-radius: 5px;
+}
