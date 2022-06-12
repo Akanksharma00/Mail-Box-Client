@@ -88,7 +88,7 @@ const SignUp = (props) => {
             </form>
         </Card>
         <Card>
-            <p>Have an account? <a href='#'>Login</a></p>
+            <p>Have an account? <a href='/login'>Login</a></p>
         </Card>
         </React.Fragment>
     )    
