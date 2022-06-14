@@ -13,7 +13,9 @@ const mailSlice = createSlice({
             state.isLoading = action.payload;
         },
         setMail(state,action){
-            state.mails = action.payload;
+            console.log(action.payload);
+            state.mails = [...action.payload];
+            console.log(state.mails)
         }
     }
 });

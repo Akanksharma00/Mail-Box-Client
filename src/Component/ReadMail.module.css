@@ -1,0 +1,9 @@
+.mail{
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    margin: 20px;
+    text-align: left;
+    padding-left: 20px;
+}
+

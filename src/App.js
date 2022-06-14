@@ -7,9 +7,13 @@ import Login from './Component/Login';
 import Inbox from './Component/Inbox';
 import Navbar from './Component/Navbar';
 import CreateMail from './Component/CreateMail';
+import ReadMail from './Component/ReadMail';
 
 function App() {
-  const isLoggedIn = useSelector(state=> state.auth.isLoggedIn);
+  const token = useSelector(state => state.auth.token);
+  const isLoggedIn = !!token;
+
+  useSelector(state=> console.log(state))
 
   return (
     <div className="App">
@@ -28,7 +32,9 @@ function App() {
       <Route path='/compose'>
         {isLoggedIn && <CreateMail />}
       </Route>
-      <Route path='*'><Redirect to='/login'/></Route>
+      <Route path='/mail/:id'>
+        <ReadMail />
+      </Route>
     </div>
   );
 }

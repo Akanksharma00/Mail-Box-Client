@@ -10,6 +10,8 @@ const Home = (props) => {
     const isLoading = useSelector(state=> state.mail.isLoading);
     const mails = useSelector(state => state.mail.mails);
 
+    useSelector(state=> console.log(state))
+
     useEffect( ()=>{
         async function fetchMail(){
         dispatch(mailActions.setLoading(true));
@@ -31,6 +33,7 @@ const Home = (props) => {
                 subject:data[key].subject,
                 content: data[key].content,
                 timestamp: data[key].timestamp,
+                isOpened: false
             })
         }
         dispatch(mailActions.setMail(loadedMail));
@@ -48,18 +51,18 @@ const Home = (props) => {
             {mails.length===0 && <p>No mail found</p>}
             <ul>
                 {mails.map((i) => {
-                    console.log("i: ",i.from );
                 return(<li>
                     <table className={style.tableBody}>
                         <tr className={style.row}>
                             <td className={style.fromCol}>{i.from}</td>
-                            <td className={style.subCol}>{i.subject}</td>
+                            <td className={style.subCol}>
+                                <a href={`/mail/${i.id}`}>{i.subject}</a></td>
                             <td className={style.timeCol}>{i.timestamp}</td>
                         </tr>
                     </table> 
                 </li>)
             })}
-            </ul>          
+            </ul> 
         </div>
     )
 };

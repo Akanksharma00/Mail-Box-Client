@@ -1,12 +1,25 @@
-import React,{useRef} from 'react';
+import React,{useRef,useState} from 'react';
 
 import style from './CreateMail.module.css';
+
+import { Editor } from "react-draft-wysiwyg";
+import { EditorState } from "draft-js";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 const CreateMail = (props) => {
     const enteredTo = useRef();
     const enteredFrom = useRef();
     const enteredContent = useRef();
     const enteredSubject = useRef();
+
+    const [text, setText] = useState('');
+    const [editorState, setEditorState] = useState(EditorState.createEmpty());
+
+    const editChange = (value) => {
+        console.log(value.blocks)
+        setText(value.blocks)
+        
+    }
 
     const sendEmailHandler = (event)=>{
         event.preventDefault();
@@ -71,10 +84,23 @@ const CreateMail = (props) => {
                     />
                 </label>
                 <hr className={style.separator}/>
-                <textarea 
+                {/* <textarea 
                     className={style.inputAreaBlock} 
                     ref={enteredContent}
-                />
+                >
+                </textarea> */}
+                {/* <TextEditor /> */}
+                <div>
+                    <Editor 
+                        ref={enteredContent}
+                        editorState = {editorState}
+                        toolbarClassName= 'toolbarClassName'
+                        wrapperClassName='wrapperClassName'
+                        editorClassName='editorClassName'
+                        onEditorStateChange={setEditorState}
+                        onContentStateChange={editChange}
+                    />
+                </div>
                 <hr className={style.separator}/>
                 <button className={style.sendBtn}>Send</button>
             </form>

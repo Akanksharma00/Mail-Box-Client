@@ -35,6 +35,7 @@ const Login = (props) => {
                 res.json().then((data)=>{
                     history.replace('/home');
                     const token = data.idToken;
+                    localStorage.setItem('token',token);
                     dispatch(authActions.login(token));
                 })
 

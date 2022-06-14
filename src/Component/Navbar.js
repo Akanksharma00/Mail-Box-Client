@@ -7,9 +7,12 @@ import { authActions } from "../store/authReducer";
 
 const Navbar = (props) => {
     const dispatch = useDispatch();
-    const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+    // const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+    const token = useSelector(state => state.auth.token);
+    const isLoggedIn = !!token;
 
     const logoutHandler = () => {
+        localStorage.removeItem('token');
         dispatch(authActions.logout());
     }
 
