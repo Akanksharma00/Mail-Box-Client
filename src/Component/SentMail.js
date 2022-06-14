@@ -4,7 +4,7 @@ import { mailActions } from "../store/mailReducer";
 
 import style from './Inbox.module.css';
 
-const Home = (props) => {
+const SentMail = (props) => {
     const dispatch = useDispatch();
 
     const isLoading = useSelector(state=> state.mail.isLoading);
@@ -15,7 +15,7 @@ const Home = (props) => {
     useEffect( ()=>{
         async function fetchMail(){
         dispatch(mailActions.setLoading(true));
-        try{const response = await fetch('https://mail-box-client-eb11c-default-rtdb.firebaseio.com/inbox.json')
+        try{const response = await fetch('https://mail-box-client-eb11c-default-rtdb.firebaseio.com/sent.json')
         
         if(!response.ok){
             throw new Error('Something went wrong...retrying!');
@@ -46,7 +46,7 @@ const Home = (props) => {
     fetchMail();
     },[]);
 
-    return(
+    return (
         <div>
             {mails.length===0 && <p>No mail found</p>}
             <ul>
@@ -54,9 +54,9 @@ const Home = (props) => {
                 return(<li>
                     <table className={style.tableBody}>
                         <tr className={style.row}>
-                            <td className={style.fromCol}>{i.to}</td>
+                            <td className={style.fromCol}>{i.from}</td>
                             <td className={style.subCol}>
-                                <a href={`/mail/${i.id}`}>{i.subject}</a></td>
+                                <a href={`/sentmail/${i.id}`}>{i.subject}</a></td>
                             <td className={style.timeCol}>{i.timestamp}</td>
                         </tr>
                     </table> 
@@ -64,7 +64,7 @@ const Home = (props) => {
             })}
             </ul> 
         </div>
-    )
+    );
 };
 
-export default Home;
+export default SentMail;

@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 
 import style from './ReadMail.module.css';
 
-const ReadMail = (props) => {
+const ReadSentMail = (props) => {
     const params = useParams();
     const history = useHistory();
 
@@ -16,7 +16,7 @@ const ReadMail = (props) => {
     const deleteHandler = (event) => {
         event.preventDefault();
         
-        fetch(`https://mail-box-client-eb11c-default-rtdb.firebaseio.com/inbox/${id}.json`,{
+        fetch(`https://mail-box-client-eb11c-default-rtdb.firebaseio.com/sent/${id}.json`,{
             method: 'DELETE',
             headers:{
                 'Content-Type': 'application/json'
@@ -24,7 +24,7 @@ const ReadMail = (props) => {
         }).then((res)=>{
             if(res.ok){
                 console.log('Mail successfully deleted!');
-                history.push('/inbox');
+                history.push('/sent');
             }else{
                 res.json().then(data => {
                     console.log(data);
@@ -35,9 +35,8 @@ const ReadMail = (props) => {
 
     const previousCallHandler = (event) => {
         event.preventDefault();
-        history.push('/inbox');
+        history.push('/sent');
     }
-
     return(
         <React.Fragment>
             <div>
@@ -58,4 +57,4 @@ const ReadMail = (props) => {
     );
 };
 
-export default ReadMail;
+export default ReadSentMail;

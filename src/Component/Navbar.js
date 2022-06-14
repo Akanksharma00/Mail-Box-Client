@@ -25,6 +25,9 @@ const Navbar = (props) => {
                 {isLoggedIn && <li className={style.navListItem}>
                     <NavLink to='/compose'>Compose</NavLink>
                 </li>}
+                {isLoggedIn && <li className={style.navListItem}>
+                    <NavLink to='/sent'>Sent</NavLink>
+                </li>}
                 <li className={style.navListItem}>
                     {!isLoggedIn && <NavLink to='/signUp'>SignUp</NavLink>}
                 </li>

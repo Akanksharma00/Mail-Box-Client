@@ -8,6 +8,8 @@ import Inbox from './Component/Inbox';
 import Navbar from './Component/Navbar';
 import CreateMail from './Component/CreateMail';
 import ReadMail from './Component/ReadMail';
+import SentMail from './Component/SentMail';
+import ReadSentMail from './Component/ReadSentMail';
 
 function App() {
   const token = useSelector(state => state.auth.token);
@@ -21,7 +23,9 @@ function App() {
       <Navbar />
       <Route path='/inbox'>
         {isLoggedIn && <Inbox />}
-        {!isLoggedIn && <Redirect to='/login' />}
+      </Route>
+      <Route path='/sent'>
+        {isLoggedIn && <SentMail />}
       </Route>
       <Route path='/signUp'>
         <SignUp />
@@ -34,6 +38,9 @@ function App() {
       </Route>
       <Route path='/mail/:id'>
         <ReadMail />
+      </Route>
+      <Route path='/sentmail/:id'>
+        <ReadSentMail />
       </Route>
     </div>
   );
