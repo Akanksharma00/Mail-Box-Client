@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
-import { Route, Redirect } from 'react-router-dom';
+import { Route ,Routes, Navigate} from 'react-router-dom';
 
-import './App.css';
+import '../src/Style/App.css';
 import SignUp from './Component/SignUp';
 import Login from './Component/Login';
 import Inbox from './Component/Inbox';
@@ -11,37 +11,36 @@ import ReadMail from './Component/ReadMail';
 import SentMail from './Component/SentMail';
 import ReadSentMail from './Component/ReadSentMail';
 
+import logo from './Asset/logo.jpg';
+import Header from './Component/Header';
+
 function App() {
   const token = useSelector(state => state.auth.token);
   const isLoggedIn = !!token;
 
-  useSelector(state=> console.log(state))
-
   return (
     <div className="App">
-      <h1>Mail Box Client</h1>
-      <Navbar />
-      <Route path='/inbox'>
-        {isLoggedIn && <Inbox />}
-      </Route>
-      <Route path='/sent'>
-        {isLoggedIn && <SentMail />}
-      </Route>
-      <Route path='/signUp'>
-        <SignUp />
-      </Route>
-      <Route path='/login'>
-        <Login />
-      </Route>
-      <Route path='/compose'>
-        {isLoggedIn && <CreateMail />}
-      </Route>
-      <Route path='/mail/:id'>
-        <ReadMail />
-      </Route>
-      <Route path='/sentmail/:id'>
-        <ReadSentMail />
-      </Route>
+      {!isLoggedIn && <div className='logo'>
+        <img src={logo} className='logo-img'/>
+      </div>}
+      {isLoggedIn && <Header />}
+      <div className='mail-body'>
+        <div className='sidebar'>
+          {isLoggedIn && <Navbar />}
+        </div>
+        <div className='mailContent'>
+          <Routes>
+            {!isLoggedIn && <Route path='/signUp' element={<SignUp />} />}
+            {!isLoggedIn && <Route path='/login' element={<Login />} />}
+            {isLoggedIn && <Route path='/inbox' element={<Inbox />} />}
+            {isLoggedIn && <Route path='/sent' element={<SentMail />} />}
+            {isLoggedIn && <Route path='/compose' element={<CreateMail />} />}
+            {isLoggedIn && <Route path='/mail/:id' element={<ReadMail />} />}
+            {isLoggedIn && <Route path='/sentmail/:id' element={<ReadSentMail />} />}
+            {!isLoggedIn && <Route path="*" element={<Login />} />}
+          </Routes>
+        </div>
+      </div>
     </div>
   );
 }

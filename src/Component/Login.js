@@ -1,15 +1,15 @@
 import React,{useRef} from "react";
-import { useHistory } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux/es/exports";
 
-import style from './SignUp.module.css';
+import '../Style/Login.css';
 
-import Card from "../Layout/Card";
+import Card from "./Card";
 import {authActions} from '../store/authReducer';
  
 const Login = (props) => {
     const dispatch = useDispatch();
-    const history = useHistory();
+    const navigate = useNavigate();
     const enteredEmailRef = useRef();
     const enteredPasswordRef = useRef();
 
@@ -33,10 +33,11 @@ const Login = (props) => {
             if(res.ok){
                 console.log('User logged in!');
                 res.json().then((data)=>{
-                    history.replace('/home');
                     const token = data.idToken;
                     localStorage.setItem('token',token);
+                    localStorage.setItem('email',email);
                     dispatch(authActions.login(token));
+                    navigate('/inbox');
                 })
 
             }else{
@@ -49,39 +50,43 @@ const Login = (props) => {
     }
 
     return(
-        <React.Fragment>
+        <div className="login">
             <Card>
-                <h1>Login</h1>
+                <h1 className="heading">Login</h1>
                 <form onSubmit={loginHandler}>
-                    <div>
-                        <label htmlFor="email" className={style.label}>Email:</label>
+                    <div className='input-div'>
                         <input 
                             type='email'
                             id='email'
-                            className={style.input}
+                            className='input'
                             ref={enteredEmailRef}
+                            autoComplete='off'
+                            required
                         />
+                        <label htmlFor="email" className='label'>Email</label>
                     </div>
-                    <div>
-                        <label htmlFor="password" className={style.label}>Password:</label>
+                    <div className='input-div'>
                         <input 
                             type='password'
                             id='password'
-                            className={style.input}
+                            className='input'
                             ref={enteredPasswordRef}
+                            autoComplete='off'
+                            required
                         />
+                        <label htmlFor="password" className='label'>Password</label>
                     </div>
-                    <button>Login</button>
-                    <p><a href='#'>Forgot Password</a></p>
+                    <button className='button'>Login</button>
+                    {/* <p >Forgot Password</p> */}
                 </form>
             </Card>
             <Card>
                 <p>
-                    Don't have an account?
-                    <a href='/SignUp'>Sign Up</a>
+                    Don't have an account? 
+                    <Link to='/signup'>Signup</Link>
                 </p>
             </Card>
-        </React.Fragment>
+        </div>
     )
 };
 

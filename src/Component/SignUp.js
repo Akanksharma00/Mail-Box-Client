@@ -1,10 +1,12 @@
 import React,{useRef} from "react";
+import { useNavigate,Link } from "react-router-dom";
 
-import Card from "../Layout/Card";
+import Card from "./Card";
 
-import style from './SignUp.module.css';
+import '../Style/Login.css';
 
 const SignUp = (props) => {
+    const navigate = useNavigate();
     const enteredEmailRef = useRef();
     const enteredPasswordRef = useRef();
     const enteredConfirmPasswordRef = useRef();
@@ -36,6 +38,7 @@ const SignUp = (props) => {
         }).then((res)=>{
             if(res.ok){
                 console.log('User successfully submitted');
+                navigate('/login');
                 return res.json();
             }else{
                 res.json().then((data)=>{
@@ -44,53 +47,51 @@ const SignUp = (props) => {
                 })
             }
         });
-
-        
-
     }
 
     return (
-        <React.Fragment>
+        <div className='login'>
         <Card>
-            <h1>Sign Up</h1>
+            <h1 className='heading'>Sign Up</h1>
             <form onSubmit={signUpHandler}>
-                <div>
-                    <label htmlFor='email' className={style.label}>Email:</label>
+                <div className='input-div'>
                     <input 
-                        className={style.input}     
+                        className='input'    
                         type='email' 
                         id='email' 
                         required={true}
                         ref={enteredEmailRef}
                     />
+                    <label htmlFor='email' className='label'>Email</label>
                 </div>
-                <div>
-                    <label htmlFor='password' className={style.label}>Password:</label>
+                <div className='input-div'>
                     <input 
-                        className={style.input} 
+                        className='input' 
                         type='password' 
                         id='password'  
                         required={true}
                         ref={enteredPasswordRef}
                     />
+                    <label htmlFor='password' className='label'>Password</label>
                 </div>
-                <div>
-                    <label htmlFor='confirmPassword' className={style.label}>Confirm Password</label>
+                <div className='input-div'>  
                     <input 
-                        className={style.input} 
+                        className='input'
                         type='password' 
                         id='confirmPassword'  
                         required={true}
                         ref={enteredConfirmPasswordRef}
                     />
+                    <label htmlFor='confirmPassword' className='label'>Confirm Password</label>
                 </div>
-                <button>Sign up</button>
+                <button className='button'>Sign up</button>
             </form>
         </Card>
         <Card>
-            <p>Have an account? <a href='/login'>Login</a></p>
+            <p>Have an account? 
+                <Link to='/login'>Login</Link></p>
         </Card>
-        </React.Fragment>
+        </div>
     )    
 };
 

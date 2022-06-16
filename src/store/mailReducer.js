@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialMailState = {
-    mails: [],
+    receivedMails: [],
+    sentMails: [],
     isLoading: false
 }
 
@@ -12,10 +13,11 @@ const mailSlice = createSlice({
         setLoading(state,action){
             state.isLoading = action.payload;
         },
-        setMail(state,action){
-            console.log(action.payload);
-            state.mails = [...action.payload];
-            console.log(state.mails)
+        setReceivedMail(state,action){
+            state.receivedMails = [...action.payload];
+        },
+        setSentMail(state,action){
+            state.sentMails = [...action.payload];
         }
     }
 });

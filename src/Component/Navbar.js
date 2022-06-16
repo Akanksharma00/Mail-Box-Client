@@ -2,38 +2,32 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import style from './Navbar.module.css';
-import { authActions } from "../store/authReducer";
+import '../Style/Navbar.css';
 
 const Navbar = (props) => {
     const dispatch = useDispatch();
-    // const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
     const token = useSelector(state => state.auth.token);
     const isLoggedIn = !!token;
 
-    const logoutHandler = () => {
-        localStorage.removeItem('token');
-        dispatch(authActions.logout());
-    }
+    
 
     return(
-        <nav className={style.navbar}>
-            <ul className={style.navList}>
-                {isLoggedIn && <li className={style.navListItem}>
+        <nav className='navbar'>
+            <ul>
+                {isLoggedIn && <li>
                     <NavLink to='/inbox'>Inbox</NavLink>
                 </li>}
-                {isLoggedIn && <li className={style.navListItem}>
+                {isLoggedIn && <li>
                     <NavLink to='/compose'>Compose</NavLink>
                 </li>}
-                {isLoggedIn && <li className={style.navListItem}>
+                {isLoggedIn && <li>
                     <NavLink to='/sent'>Sent</NavLink>
                 </li>}
-                <li className={style.navListItem}>
+                <li>
                     {!isLoggedIn && <NavLink to='/signUp'>SignUp</NavLink>}
                 </li>
-                <li className={style.navListItem}>
+                <li>
                     {!isLoggedIn && <NavLink to='/login'>Login</NavLink>}
-                    {isLoggedIn && <button onClick={logoutHandler}>Logout</button>}
                 </li>
             </ul>
         </nav>

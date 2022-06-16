@@ -1,0 +1,32 @@
+
+.tableBody{
+    width: 100%;
+    margin: auto;
+    padding-right: 20px;
+}
+
+.row{
+    width: 100%;
+    
+}
+
+.fromCol{
+    text-align: left;
+    padding-left: 10px;
+    width: 20%;
+    border-bottom: 1px solid #ccc;
+}
+
+.subCol{
+    text-align: left;
+    padding-left: 10px;
+    width: 75%;
+    border-bottom: 1px solid #ccc;
+}
+
+.timeCol{
+    text-align: left;
+    padding-left: 10px;
+    width: 5%;
+    border-bottom: 1px solid #ccc;
+}

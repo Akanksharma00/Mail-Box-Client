@@ -1,21 +1,25 @@
 import React,{useEffect} from "react";
+import {useNavigate} from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { mailActions } from "../store/mailReducer";
 
-import style from './Inbox.module.css';
+import '../Style/Inbox.css';
 
 const SentMail = (props) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const isLoading = useSelector(state=> state.mail.isLoading);
-    const mails = useSelector(state => state.mail.mails);
+    const mails = useSelector(state => state.mail.sentMails);
 
-    useSelector(state=> console.log(state))
+    const email = localStorage.getItem('email');
+    const string = email.split('@');
+    const username = string[0];
 
     useEffect( ()=>{
         async function fetchMail(){
         dispatch(mailActions.setLoading(true));
-        try{const response = await fetch('https://mail-box-client-eb11c-default-rtdb.firebaseio.com/sent.json')
+        try{const response = await fetch(`https://mail-box-client-eb11c-default-rtdb.firebaseio.com/mails/${username}.json`)
         
         if(!response.ok){
             throw new Error('Something went wrong...retrying!');
@@ -36,7 +40,7 @@ const SentMail = (props) => {
                 isOpened: false
             })
         }
-        dispatch(mailActions.setMail(loadedMail));
+        dispatch(mailActions.setSentMail(loadedMail));
         }catch(error){
             console.log(error);
         }
@@ -52,12 +56,13 @@ const SentMail = (props) => {
             <ul>
                 {mails.map((i) => {
                 return(<li>
-                    <table className={style.tableBody}>
-                        <tr className={style.row}>
-                            <td className={style.fromCol}>{i.from}</td>
-                            <td className={style.subCol}>
-                                <a href={`/sentmail/${i.id}`}>{i.subject}</a></td>
-                            <td className={style.timeCol}>{i.timestamp}</td>
+                    <table className='tableBody'>
+                        <tr className='row'>
+                            <td className='fromCol'>{i.to}</td>
+                            <td className='subCol' onClick={()=>{navigate(`/sentmail/${i.id}`)}}>
+                                {i.subject}
+                            </td>
+                            <td className='timeCol'>{i.timestamp}</td>
                         </tr>
                     </table> 
                 </li>)
