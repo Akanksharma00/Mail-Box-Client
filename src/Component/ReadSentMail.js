@@ -3,7 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import style from './ReadMail.module.css';
+import back from '../Asset/back.png';
+import bin from '../Asset/bin.png';
+
+import '../Style/ReadMail.css';
 
 const ReadSentMail = (props) => {
     const params = useParams();
@@ -54,16 +57,19 @@ const ReadSentMail = (props) => {
     }
     return(
         <React.Fragment>
-            <div>
-                <ul>
-                    <li onClick={previousCallHandler}>Back</li>
-                    <li>Print</li>
-                    <li>Star</li>
-                    <li onClick={deleteHandler} >Delete</li>
+            <div className='iconsListDiv'>
+                <ul className='iconsList'>
+                    <li onClick={previousCallHandler} className='iconsListItem'>
+                        <img src={back} className='icons'/> 
+                    </li>
+                    {/* <li>Print</li>
+                    <li>Star</li> */}
+                    <li onClick={deleteHandler} className='iconsListItem'>
+                        <img src={bin} className='icons'/> 
+                    </li>
                 </ul>
             </div>
-            <div className={style.mail}>
-                <h1>{id}</h1>
+            <div className='mail'>
                 <h2>{from}</h2>
                 <h4>{subject}</h4>
                 <p>{content}</p>

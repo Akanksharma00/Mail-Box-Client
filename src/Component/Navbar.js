@@ -15,13 +15,16 @@ const Navbar = (props) => {
         <nav className='navbar'>
             <ul>
                 {isLoggedIn && <li>
-                    <NavLink to='/inbox'>Inbox</NavLink>
+                    <NavLink to='/inbox' className='navlink'>Inbox</NavLink>
                 </li>}
                 {isLoggedIn && <li>
-                    <NavLink to='/compose'>Compose</NavLink>
+                    <NavLink to='/compose' className='navlink'>Compose</NavLink>
                 </li>}
+                {/* {isLoggedIn && <li>
+                    <NavLink to='/starred' className='navlink'>Starred</NavLink>
+                </li>} */}
                 {isLoggedIn && <li>
-                    <NavLink to='/sent'>Sent</NavLink>
+                    <NavLink to='/sent' className='navlink'>Sent</NavLink>
                 </li>}
                 <li>
                     {!isLoggedIn && <NavLink to='/signUp'>SignUp</NavLink>}

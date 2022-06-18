@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { mailActions } from "../store/mailReducer";
 
+import star from '../Asset/star.png'
+import yellowStar from '../Asset/yellowStar.png';
+
 import '../Style/Inbox.css';
 
 const Home = (props) => {
@@ -11,6 +14,8 @@ const Home = (props) => {
 
     const isLoading = useSelector(state=> state.mail.isLoading);
     const mails = useSelector(state => state.mail.receivedMails);
+    const isStarred = useSelector(state => state.mail.isStarred);
+
     const email = localStorage.getItem('email');
     const string = email.split('@');
     const username = string[0];
@@ -66,17 +71,29 @@ const Home = (props) => {
     fetchMail();
     },[dispatch]);
 
+    const openMail = (event) => {
+        
+    }
+
     return(
         <div>
             {mails.length===0 && <p>No mail found</p>}
             <ul>
                 {mails.map((mail) => {
-                return(<li>
+                return(<li className='listItem'>
                     <table className='tableBody'>
                         <tr className='row'>
-                            <td className='fromCol'>{mail.from}</td>
+                            <td className='fromCol'>
+                                {/* <span onClick={() => {dispatch(mailActions.setStarred())}} >
+                                    {!isStarred && <img src={star} className='star'/>}
+                                    {isStarred &&  <img src={yellowStar} className='star'/>}
+                                </span> */}
+                                {mail.from}
+                            </td>
                             <td className='subCol' onClick={()=>{navigate(`/mail/${mail.id}`)}}>
-                                {mail.subject}
+                                <b>{mail.subject}</b>
+                                <span> </span>
+                                <span>{mail.content}</span>
                             </td>
                             <td className='timeCol'>{mail.timestamp}</td>
                         </tr>
