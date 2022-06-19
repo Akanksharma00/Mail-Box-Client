@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import back from '../Asset/back.png';
+import previous from '../Asset/previous.png';
 import bin from '../Asset/bin.png';
 
 import '../Style/ReadMail.css';
@@ -60,7 +60,7 @@ const ReadSentMail = (props) => {
             <div className='iconsListDiv'>
                 <ul className='iconsList'>
                     <li onClick={previousCallHandler} className='iconsListItem'>
-                        <img src={back} className='icons'/> 
+                        <img src={previous} className='icons'/> 
                     </li>
                     {/* <li>Print</li>
                     <li>Star</li> */}

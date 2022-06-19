@@ -38,8 +38,12 @@ const Home = (props) => {
         //Fetching index of current user
         const indexOfUser = usernameKeys.indexOf(username);
         //Removing current user from array
+        if(indexOfUser > 0){
         const removedValue = values.splice(indexOfUser,1);
-        // console.log('values: ',values);
+        console.log(removedValue);
+        }
+        
+        console.log('values: ',values);
         
         let receivedMails = [];
         for(let i=0;i<values.length;i++){
@@ -53,25 +57,61 @@ const Home = (props) => {
                         from: values[i][key].from,
                         subject: values[i][key].subject,
                         content: values[i][key].content,
-                        timestamp: values[i][key].timestamp
+                        timestamp: values[i][key].timestamp,
+                        hasOpened: values[i][key].hasOpened,
+                        // isStarred: values[i][key].isStarred
                     })
                 }
             }
         }
 
-        // console.log(receivedMails);
+        console.log(receivedMails);
+
+        const newMails = receivedMails.filter(i => i.hasOpened === false);
+        const noOfUnreadMails = newMails.length;
+        dispatch(mailActions.setNoOfUnreadMail(noOfUnreadMails));
+        
         console.log('Successfully loaded');
         dispatch(mailActions.setReceivedMail(receivedMails));
         }catch(error){
             console.log(error);
         }
 
-        dispatch(mailActions.setLoading(false));
+        dispatch(mailActions.setLoading(false));       
+        
+        
     }
     fetchMail();
     },[dispatch]);
 
-    const openMail = (event) => {
+    const openMailHandler = async (mail) => {
+        // console.log(mail);
+        navigate(`/mail/${mail.id}`);
+
+        const usernameString = mail.from.split('@');
+        const username =  usernameString[0];
+
+        const response = await fetch(`https://mail-box-client-eb11c-default-rtdb.firebaseio.com/mails/${username}/${mail.id}.json`,{
+            method: 'PUT',
+            body: JSON.stringify({
+                to: mail.to,
+                from: mail.from,
+                subject: mail.subject,
+                content: mail.content,
+                timestamp: mail.timestamp,
+                // isStarred: mail.isStarred,
+                hasOpened: true      
+            }),
+            headers:{
+                'Content-Type' : 'application/json'
+            }
+        })
+
+        if(response.ok){
+            console.log('Updated!');
+        }else{
+            console.log('Encountered error!');
+        }
         
     }
 
@@ -90,7 +130,7 @@ const Home = (props) => {
                                 </span> */}
                                 {mail.from}
                             </td>
-                            <td className='subCol' onClick={()=>{navigate(`/mail/${mail.id}`)}}>
+                            <td className='subCol' onClick={()=>{openMailHandler(mail)}}>
                                 <b>{mail.subject}</b>
                                 <span> </span>
                                 <span>{mail.content}</span>

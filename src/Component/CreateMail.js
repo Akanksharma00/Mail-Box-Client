@@ -39,7 +39,8 @@ const CreateMail = (props) => {
                 from: email,
                 subject: subject,
                 content: content,
-                timestamp: new Date().toLocaleTimeString()
+                timestamp: new Date().toLocaleTimeString(),
+                hasOpened: false
             }),
             headers:{
                 'Content-Type':'application/json'

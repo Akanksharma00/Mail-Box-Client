@@ -3,7 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialMailState = {
     receivedMails: [],
     sentMails: [],
-    isStarred: false,
+    // starredMails: [],
+    noOfUnreadMail : 0,
+    // isStarred: false,
     isLoading: false
 }
 
@@ -17,12 +19,18 @@ const mailSlice = createSlice({
         setReceivedMail(state,action){
             state.receivedMails = [...action.payload];
         },
+        setNoOfUnreadMail(state,action){
+            state.noOfUnreadMail = action.payload;
+        },
         setSentMail(state,action){
             state.sentMails = [...action.payload];
         },
-        setStarred(state){
-            state.isStarred = !state.isStarred
-        }
+        // setStarred(state){
+        //     state.isStarred = !state.isStarred
+        // },
+        // setStarredMails(state,action){
+        //     state.starredMails = [...state.starredMails];
+        // }
     }
 });
 

@@ -9,13 +9,20 @@ const Navbar = (props) => {
     const token = useSelector(state => state.auth.token);
     const isLoggedIn = !!token;
 
-    
+    const noOfUnreadMail = useSelector(state => state.mail.noOfUnreadMail);
+    let hasNewMails = false;
+    if(noOfUnreadMail !== 0){
+        hasNewMails = true;
+    }
 
     return(
         <nav className='navbar'>
             <ul>
                 {isLoggedIn && <li>
-                    <NavLink to='/inbox' className='navlink'>Inbox</NavLink>
+                    <NavLink to='/inbox' className='navlink'>
+                        Inbox
+                        {hasNewMails && <span className='badge'>{noOfUnreadMail}</span>}
+                    </NavLink>
                 </li>}
                 {isLoggedIn && <li>
                     <NavLink to='/compose' className='navlink'>Compose</NavLink>
